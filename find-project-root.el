@@ -45,5 +45,22 @@ This is usually what you want."
     (if root-path
         (expand-file-name root-path))))
 
+(defalias 'fpr--git-root 'vc-git-root
+  "Find the root path of the git repository that contains FILE.")
+
+(defalias 'fpr--svn-root 'vc-svn-root
+  "Find the root path of the git repository that contains FILE.")
+
+;; todo: send a patch for Emacs upstream to implement vc-cvs-root
+(defun fpr--cvs-root (file)
+  "Find the root path of the CVS repository that contains FILE."
+  (let* ((absolute-path (expand-file-name file))
+         (directory-path (file-name-directory absolute-path)))
+    (locate-dominating-file
+     directory-path
+     (lambda (dir)
+       (not 
+        (member "CVS" (directory-files dir)))))))
+
 (provide 'find-project-root)
 ;;; find-project-root.el ends here
