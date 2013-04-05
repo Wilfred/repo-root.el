@@ -20,3 +20,18 @@ then
     cd test_repos/cvs
     cvs -z3 -d:pserver:anonymous@cvs.savannah.gnu.org:/web/emacs co emacs/tour
 fi
+
+if [ ! -d ./test_repos/hg ];
+then
+    echo "todo: mercurial"
+fi
+
+if [ ! -d ./test_repos/bzr ];
+then
+    echo "todo: bazaar"
+fi
+
+if [ ! -d ./test_repos/darcs ];
+then
+    echo "todo: darcs"
+fi
