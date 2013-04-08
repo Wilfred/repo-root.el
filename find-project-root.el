@@ -41,8 +41,10 @@ absolute paths.
 If PATH isn't specified, defaults to `default-directory'.
 This is usually what you want."
   (let* ((file-path (or path default-directory))
-         (root-path (or (vc-git-root file-path)
-                        (vc-svn-root file-path))))
+         (root-path (or (fpr--git-root file-path)
+                        (fpr--svn-root file-path)
+                        (fpr--cvs-root file-path)
+                        (fpr--darcs-root file-path))))
     (if root-path
         (directory-file-name
          (expand-file-name root-path)))))
@@ -63,6 +65,16 @@ This is usually what you want."
      (lambda (dir)
        (not 
         (member "CVS" (directory-files dir)))))))
+
+;; this is based on vc-darcs-find-root from vc-darcs, but we don't
+;; want to pull in a whole package for one small function
+(defun fpr--darcs-root (file)
+    "Find the root path of the darcs repository that contains FILE."
+  (let* ((absolute-path (expand-file-name file))
+         (directory-path (file-name-directory absolute-path)))
+    (locate-dominating-file
+     directory-path
+     "_darcs")))
 
 (provide 'find-project-root)
 ;;; find-project-root.el ends here
