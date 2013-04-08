@@ -31,7 +31,6 @@
 (autoload 'vc-svn-root "vc-svn")
 (require 'vc-svn) ;; fixme: vc-svn-root requires vc-svn-admin-directory loaded
 
-;; fixme: returns the enclosing git directory, even if svn is inside
 (defun find-project-root (&optional path)
   "Find the absolute path to the root of the project that contains PATH.
 Usually, this is the root of VCS project (git, svn, etc). Returns
