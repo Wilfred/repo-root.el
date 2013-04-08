@@ -35,7 +35,9 @@
 (defun find-project-root (&optional path)
   "Find the absolute path to the root of the project that contains PATH.
 Usually, this is the root of VCS project (git, svn, etc). Returns
-nil when no project root is found.
+nil when no project root is found. Results have the form
+\"/tmp/foo\", never with a trailing slash. Results are always
+absolute paths.
 
 If PATH isn't specified, defaults to `default-directory'.
 This is usually what you want."
@@ -43,7 +45,8 @@ This is usually what you want."
          (root-path (or (vc-git-root file-path)
                         (vc-svn-root file-path))))
     (if root-path
-        (expand-file-name root-path))))
+        (directory-file-name
+         (expand-file-name root-path)))))
 
 (defalias 'fpr--git-root 'vc-git-root
   "Find the root path of the git repository that contains FILE.")
