@@ -5,6 +5,13 @@
 ;; Finds the root of the project path for Git and Subversion
 ;; projects. More VCS systems coming.
 
+;;; TODO:
+
+;; * RCS
+;; * Darcs (implemented, needs unit tests)
+;; * Bazaar
+;; * Mercurial
+
 ;;; License:
 
 ;; This file is not part of GNU Emacs.
