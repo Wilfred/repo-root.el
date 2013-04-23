@@ -35,3 +35,8 @@ if [ ! -d ./test_repos/darcs ];
 then
     echo "todo: darcs"
 fi
+
+if [ ! -d ./test_repos/darcs ];
+then
+    echo "todo: mks integrity"
+fi
