@@ -2,8 +2,8 @@
 
 ;;; Commentary
 
-;; Finds the root of the project path for Git and Subversion
-;; projects. More VCS systems coming.
+;; Finds the root of the project path for Git, SVN and Darcs
+;; repositories.
 
 ;;; TODO:
 
