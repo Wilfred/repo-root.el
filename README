@@ -1,1 +1,1 @@
-;;; find-project-root.el -- find the root directory of a VCS project
+;;; repo-root.el -- find the root directory of a VCS project

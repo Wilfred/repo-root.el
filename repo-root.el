@@ -1,4 +1,4 @@
-;;; find-project-root.el -- find the root directory of a VCS project
+;;; repo-root.el -- find the root directory of a VCS project
 
 ;;; Commentary
 
@@ -38,7 +38,7 @@
 (autoload 'vc-svn-root "vc-svn")
 (require 'vc-svn) ;; fixme: vc-svn-root requires vc-svn-admin-directory loaded
 
-(defun find-project-root (&optional path)
+(defun repo-root (&optional path)
   "Find the absolute path to the root of the project that contains PATH.
 Usually, this is the root of VCS project (git, svn, etc). Returns
 nil when no project root is found. Results have the form
@@ -48,22 +48,22 @@ absolute paths.
 If PATH isn't specified, defaults to `default-directory'.
 This is usually what you want."
   (let* ((file-path (or path default-directory))
-         (root-path (or (fpr--git-root file-path)
-                        (fpr--svn-root file-path)
-                        (fpr--cvs-root file-path)
-                        (fpr--darcs-root file-path))))
+         (root-path (or (repo-root-git-root file-path)
+                        (repo-root-svn-root file-path)
+                        (repo-root-cvs-root file-path)
+                        (repo-root-darcs-root file-path))))
     (if root-path
         (directory-file-name
          (expand-file-name root-path)))))
 
-(defalias 'fpr--git-root 'vc-git-root
+(defalias 'repo-root-git-root 'vc-git-root
   "Find the root path of the git repository that contains FILE.")
 
-(defalias 'fpr--svn-root 'vc-svn-root
+(defalias 'repo-root-svn-root 'vc-svn-root
   "Find the root path of the git repository that contains FILE.")
 
 ;; todo: send a patch for Emacs upstream to implement vc-cvs-root
-(defun fpr--cvs-root (file)
+(defun repo-root-cvs-root (file)
   "Find the root path of the CVS repository that contains FILE."
   (let* ((absolute-path (expand-file-name file))
          (directory-path (file-name-directory absolute-path)))
@@ -75,7 +75,7 @@ This is usually what you want."
 
 ;; this is based on vc-darcs-find-root from vc-darcs, but we don't
 ;; want to pull in a whole package for one small function
-(defun fpr--darcs-root (file)
+(defun repo-root-darcs-root (file)
     "Find the root path of the darcs repository that contains FILE."
   (let* ((absolute-path (expand-file-name file))
          (directory-path (file-name-directory absolute-path)))
@@ -83,5 +83,5 @@ This is usually what you want."
      directory-path
      "_darcs")))
 
-(provide 'find-project-root)
+(provide 'repo-root)
 ;;; find-project-root.el ends here
