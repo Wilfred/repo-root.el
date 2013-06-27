@@ -5,12 +5,36 @@
 ;; Finds the root of the project path for Git, SVN and Darcs
 ;; repositories.
 
+;; This is intended for modules that want to discover the currently
+;; edited project with zero configuration required by the user.
+
 ;;; TODO:
 
+;; Detection from version control:
 ;; * RCS
 ;; * Darcs (implemented, needs unit tests)
 ;; * Bazaar
 ;; * Mercurial
+;; * MKS
+
+;; Detection from build tools:
+;; * lein
+;; * sbt
+;; * maven
+;; * rebar
+;; * bundler
+
+;;; Similar projects:
+
+;; * https://github.com/jrockway/eproject has a concept of a generic
+;;   project
+;; * https://github.com/bbatsov/projectile supports project detection,
+;;   or an explicit .projectile file.
+;; * http://code.google.com/p/emacs-project-mode/ requires the user to
+;;   interactively state their project paths, and saves
+;;   ~/.emacs.d/PROJECT-NAME.proj
+;;
+;; Several others are documented at http://www.emacswiki.org/emacs/CategoryProject
 
 ;;; License:
 
