@@ -58,9 +58,10 @@
 
 ;;; Code
 
+(require 'f)
+
 (autoload 'vc-git-root "vc-git")
 (autoload 'vc-svn-root "vc-svn")
-(require 'vc-svn) ;; fixme: vc-svn-root requires vc-svn-admin-directory loaded
 
 (defun repo-root (&optional path)
   "Find the absolute path to the root of the project that contains PATH.
@@ -83,8 +84,33 @@ This is usually what you want."
 (defalias 'repo-root-git-root 'vc-git-root
   "Find the root path of the git repository that contains FILE.")
 
-(defalias 'repo-root-svn-root 'vc-svn-root
-  "Find the root path of the git repository that contains FILE.")
+(defun repo-root--locate-dominating-file-top (file name)
+  "Look up the directory hierarchy from FILE for a directory containing NAME.
+If multiple directories are found, return the parentmost (i.e. closest to /).
+
+Note unlike `locate-dominating-file', NAME may be a file or directory."
+  (let* ((absolute-path (f-expand file))
+         (directory-path (f-dirname absolute-path))
+         (current-dir-matches (f-exists? (f-join directory-path name))))
+    (if (f-root? directory-path)
+        (if current-dir-matches
+            ;; / contains NAME, so return this directory.
+            directory-path
+          ;; / does not contain NAME, we're done.
+          nil)
+      (or
+       ;; If there's an ancestor directory that contains this NAME, return it.
+       (repo-root--locate-dominating-file-top
+        (f-parent file) name)
+       ;; Otherwise, return this directory if it contains NAME.
+       (if current-dir-matches directory-path)))))
+
+;; Note vc-svn-root doesn't exist on Emacs 23.4. In Subversion v1.7
+;; only the root has a .svn directory, whereas previously every
+;; directory has a .svn directory. We support both.
+(defun repo-root-svn-root (file)
+  "Find the root path of the Subversion repository that contains FILE."
+  (repo-root--locate-dominating-file-top file ".svn"))
 
 ;; todo: send a patch for Emacs upstream to implement vc-cvs-root
 (defun repo-root-cvs-root (file)
