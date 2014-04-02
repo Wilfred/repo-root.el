@@ -67,7 +67,6 @@
 (require 'f)
 
 (autoload 'vc-git-root "vc-git")
-(autoload 'vc-svn-root "vc-svn")
 
 (defun repo-root (&optional path)
   "Find the absolute path to the root of the project that contains PATH.
