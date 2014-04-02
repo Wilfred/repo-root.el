@@ -1,5 +1,7 @@
 ;;; repo-root.el -- find the root directory of a VCS project
 
+;; Package-Requires: ((f "1.3"))
+
 ;;; Commentary
 
 ;; Finds the root of the project path for Git, SVN and Darcs
