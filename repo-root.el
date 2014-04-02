@@ -8,10 +8,11 @@
 ;; This is intended for modules that want to discover the currently
 ;; edited project with zero configuration required by the user.
 
-;;; TODO:
+;;; Target Features
 
 ;; Detection from version control:
 ;; * RCS
+;; * CVS
 ;; * Darcs (implemented, needs unit tests)
 ;; * Bazaar
 ;; * Mercurial
@@ -23,6 +24,11 @@
 ;; * maven
 ;; * rebar
 ;; * bundler
+
+;; Detection from editors
+;; * Eclipse (.project)
+;; * PyDev (.pydevproject)
+;; * Emacs Projectile (.projectile)
 
 ;;; Similar projects:
 
